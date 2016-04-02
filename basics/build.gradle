@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 
-/* RETROLAMBDA >>>>
 buildscript {
   repositories {
     mavenCentral()
@@ -16,7 +15,6 @@ apply plugin: 'me.tatarka.retrolambda'
 retrolambda {
   javaVersion JavaVersion.VERSION_1_7
 }
-// <<<< RETROLAMBDA */
 
 
 android {
@@ -37,12 +35,10 @@ android {
     }
   }
 
-  /* RETROLAMBDA >>>>
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
-  // <<<< RETROLAMBDA */
 }
 
 dependencies {
