@@ -39,13 +39,11 @@ public class RxTimeTest {
     System.out.println("printInterval() - Observer created");
 
     System.out.println("printInterval() - Before Subscribe");
-    RxTime.interval.subscribe(longObserver);
-/*
-    TODO: Replace RxTime.interval.subscribe(longObserver) with this code:
+    //RxTime.interval.subscribe(longObserver);
     TestSubscriber<Long> testSubscriber = new TestSubscriber<>(longObserver);
-    RxTime.interval.subscribe(testSubscriber);
+    RxTime.interval.take(20).subscribe(testSubscriber);
     testSubscriber.awaitTerminalEvent();
-*/
+
     System.out.println("printInterval() - After Subscribe");
   }
 
@@ -66,7 +64,7 @@ public class RxTimeTest {
     }
   }
 
-/*
+
 @Test
   public void printTimerOfTimers() throws Exception {
     System.out.println("testTimerOfTimers");
@@ -87,36 +85,16 @@ public class RxTimeTest {
       }
     });
   Observable.interval(0, 500, TimeUnit.MILLISECONDS)
-        .map(new Func1<Long, Integer>() {
-          @Override
-          public Integer call(Long aLong1) {
-            return aLong1.intValue();
-          }
-        })
+        .map(Long::intValue)
         .take(10)
-        .concatMap(new Func1<Integer, Observable<String>>() {
-          @Override
-          public Observable<String> call(final Integer aInt) {
-            return Observable.interval(0, 500, TimeUnit.MILLISECONDS)
-                .map(new Func1<Long, String>() {
-                  @Override
-                  public String call(Long aLong) {
-                    return new Date().getTime() + " " + aInt + "->" + aLong;
-                  }
-                })
-                .doOnSubscribe(new Action0() {
-                  @Override
-                  public void call() {
-                    System.out.println("Emit " + aInt);
-                  }
-                })
-                .take(aInt);
-          }
-        })
+        .concatMap(aInt -> Observable.interval(0, 500, TimeUnit.MILLISECONDS)
+            .map(aLong -> new Date().getTime() + " " + aInt + "->" + aLong)
+            .doOnSubscribe(() -> System.out.println("Emit " + aInt))
+            .take(aInt))
         .subscribe(testSubscriber);
 
     testSubscriber.awaitTerminalEvent();
     System.out.println();
   }
-*/
+
 }
