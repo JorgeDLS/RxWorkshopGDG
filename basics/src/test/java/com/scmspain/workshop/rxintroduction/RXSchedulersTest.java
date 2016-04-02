@@ -12,19 +12,9 @@ import rx.schedulers.Schedulers;
 public class RXSchedulersTest {
 
   public Observable<String> observable = Observable
-      .defer(new Func0<Observable<String>>() {
-        @Override
-        public Observable<String> call() {
-          return aNetworkRequest();
-        }
-      })
+      .defer(() -> aNetworkRequest())
       .observeOn(Schedulers.computation())
-      .map(new Func1<String, String>() {
-        @Override
-        public String call(String response) {
-          return calculateStuffFor(response);
-        }
-      })
+      .map(response -> calculateStuffFor(response))
       .subscribeOn(Schedulers.io())
       .observeOn(Schedulers.newThread());
 

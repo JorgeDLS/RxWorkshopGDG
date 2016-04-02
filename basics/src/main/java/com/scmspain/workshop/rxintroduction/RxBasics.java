@@ -8,11 +8,18 @@ public class RxBasics {
     return Observable.just(4);
     //return Observable.just(2,3,4,5);
     //return Observable.range(1,6);
-    //return Observable.from(new Integer[]{2,3,4});
+    //return Observable.from(new Integer[] { 2, 3, 4 });
   }
 
   public static Func1<Integer, Integer> multiplyByTen() {
-    return null;
-    //TODO: Return a Func1 to map x -> x * 10
+    return integer -> integer * 10;
+  }
+
+  public static Observable<String> getStringObservable() {
+    return Observable.just("uno", "dos", "tres", "cuatro");
+  }
+
+  public static Func1<String, Integer> stringToLength() {
+    return s -> s.length();
   }
 }
